@@ -135,12 +135,22 @@ app.get('/api/users/:_id/logs', async(req, res) => {
     date: new Date(e.date).toDateString()
   }) )
 
-  res.json({
+  const response= {
     username: user.username,
     _id: user._id,
     count: log.length,
     log: log
-  })
+  }
+
+  if(from) {
+    response.from= new Date(from).toDateString()
+  }
+
+  if(to) {
+    response.to= new Date(to).toDateString()
+  }
+
+  res.json(response)
 
     } catch(error) {
       console.log(error);
