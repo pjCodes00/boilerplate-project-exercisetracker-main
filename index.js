@@ -112,29 +112,25 @@ app.get('/api/users/:_id/logs', async(req, res) => {
   const userId= req.params._id 
   const{from, to, limit}= req.query
   const user= await User.findById(userId)
-/*
-  const dateFilter= {}
-  if(from) dateFilter.$gte= new Date(from)
-  if(to) dateFilter.$lte= new Date(to)
 
-  const query={user: userId}
-  if(from || to) {
-    query.date= dateFilter
-  }
-*/
-   const query = { user: userId };
-    if (from || to) {
+  
+    const query = { user: userId };
+   if (from || to) {
       query.date = {};
-      if (from) query.date.$gte = new Date(from);
-      if (to) query.date.$lte = new Date(to);
+      if (from && !isNaN(Date.parse(from))) {
+        query.date.$gte = new Date(from);
+      }
+      if (to && !isNaN(Date.parse(to))) {
+        query.date.$lte = new Date(to);
+      }
     }
 
   
   let exercisesQuery= Exercise.find(query)
 
-  if(limit) {
-    exercisesQuery= exercisesQuery.limit(Number(limit))
-  }
+  if (limit && !isNaN(limit)) {
+      exercisesQuery = exercisesQuery.limit(parseInt(limit));
+    }
 
   const exercises= await exercisesQuery 
   
