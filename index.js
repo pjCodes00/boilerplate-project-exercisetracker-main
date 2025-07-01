@@ -123,7 +123,7 @@ app.get('/api/users/:_id/logs', async(req, res) => {
   }
 
   
-  const exercisesQuery= Exercise.find(query)
+  let exercisesQuery= Exercise.find(query)
 
   if(limit) {
     exercisesQuery= exercisesQuery.limit(Number(limit))
