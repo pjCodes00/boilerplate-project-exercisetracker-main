@@ -66,7 +66,7 @@ const exerciseSchema= new mongoose.Schema({
     required: true
   },
   date:{
-    type: String,
+    type: Date,
     default: Date.now
   }
   
@@ -101,7 +101,7 @@ app.post('/api/users/:_id/exercises', async(req, res) => {
   })
 
   } catch(error) {
-    console.log(err);
+    console.log(error);
     res.status(500).json({ error: 'Something went wrong' });
   }
 })
@@ -145,7 +145,7 @@ app.get('/api/users/:_id/logs', async(req, res) => {
   })
 
     } catch(error) {
-      console.log(err);
+      console.log(error);
     res.status(500).json({ error: 'Something went wrong' });
     }
 })
